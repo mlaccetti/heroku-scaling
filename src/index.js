@@ -1,4 +1,5 @@
 const path = require('path');
+const util = require('util');
 
 const Koa = require('koa');
 var Router = require('koa-router');
@@ -10,11 +11,11 @@ const responseTime = require('koa-response-time');
 const serve = require('koa-static');
 const views = require('koa-views');
 
-const bcrypt = require('bcrypt');
 const nunjucks = require('nunjucks');
 
 const staticPath = path.join(__dirname, '../static');
 const viewPath = path.join(__dirname, '../views');
+
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(viewPath));
 env.addFilter('json', function(value, spaces) {
   if (value instanceof nunjucks.runtime.SafeString) {
@@ -23,6 +24,8 @@ env.addFilter('json', function(value, spaces) {
   const jsonString = JSON.stringify(value, null, spaces).replace(/</g, '\\u003c');
   return nunjucks.runtime.markSafe(jsonString);
 });
+
+const sleep = util.promisify(setTimeout);
 
 const app = new Koa();
 app.use(conditional());
@@ -46,15 +49,11 @@ app.use(
 
 const router = new Router();
 router.get('/', async (ctx) => {
-  // we do this per-request because we are intentionally trying to create load
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hashed = await bcrypt.hash(JSON.stringify(ctx.request.headers), salt);
+  await sleep(500);
 
   ctx.state = {
     username: 'from-koa',
-    request: ctx.request.headers,
-    hashed: hashed
+    request: ctx.request.headers
   };
   return ctx.render('index.njk');
 });
