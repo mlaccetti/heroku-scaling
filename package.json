@@ -1,0 +1,77 @@
+{
+  "name": "heroku-scaling",
+  "version": "0.1.0",
+  "description": "Sample applications to demonstrate how Heroku scaling can be done",
+  "main": "src/index.js",
+  "repository": "git@github.com:mlaccetti/heroku-scaling.git",
+  "author": "Michael Laccetti <michael@laccetti.com> (https://laccetti.com/)",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "koa": "2.7.0",
+    "koa-logger": "^3.2.0",
+    "koa-response-time": "^2.1.0",
+    "koa-router": "^7.4.0",
+    "koa-views": "6.2.0",
+    "koa-x-request-id": "^2.0.0",
+    "nunjucks": "3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "4.3.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "husky": "2.3.0",
+    "lint-staged": "8.1.7",
+    "nodemon": "1.19.0",
+    "prettier": "1.17.1"
+  },
+  "scripts": {
+    "start": "node src/index",
+    "dev": "nodemon src/index"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:prettier/recommended"
+    ],
+    "env": {
+      "jest": true,
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "ecmaFeatures": {
+        "impliedStrict": true
+      }
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ],
+  "prettier": {
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "arrowParens": "always",
+    "quoteProps": "consistent"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*"
+    ],
+    "ext": "html,js,json"
+  }
+}

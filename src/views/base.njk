@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heroku Sample App</title>
+
+    <style>
+      body {
+        background-color: #ccffcc;
+        font-family: sans-serif;
+      }
+
+      .footer {
+        margin-top: 5em;
+        font-size: .75em;
+      }
+    </style>
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+
+    <div class="footer">
+      {% block footer %}Sample Application{% endblock %}
+    </div>
+  </body>
+</html>
