@@ -3,6 +3,8 @@ const path = require('path');
 const Koa = require('koa');
 var Router = require('koa-router');
 
+const conditional = require('koa-conditional-get');
+const etag = require('koa-etag');
 const logger = require('koa-logger');
 const responseTime = require('koa-response-time');
 const serve = require('koa-static');
@@ -23,9 +25,15 @@ env.addFilter('json', function(value, spaces) {
 });
 
 const app = new Koa();
+app.use(conditional());
+app.use(etag());
 app.use(logger());
 app.use(responseTime());
-app.use(serve(staticPath));
+app.use(
+  serve(staticPath, {
+    defer: true
+  })
+);
 app.use(
   views(viewPath, {
     extension: 'njk',
@@ -39,7 +47,7 @@ app.use(
 const router = new Router();
 router.get('/', async (ctx) => {
   // we do this per-request because we are intentionally trying to create load
-  const saltRounds = 13;
+  const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   const hashed = await bcrypt.hash(JSON.stringify(ctx.request.headers), salt);
 
