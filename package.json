@@ -8,7 +8,6 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "bcrypt": "3.0.6",
     "koa": "2.7.0",
     "koa-conditional-get": "2.0.0",
     "koa-etag": "3.0.0",
@@ -18,7 +17,8 @@
     "koa-static": "5.0.0",
     "koa-views": "6.2.0",
     "koa-x-request-id": "2.0.0",
-    "nunjucks": "3.2.0"
+    "nunjucks": "3.2.0",
+    "sleep": "6.1.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",

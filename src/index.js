@@ -1,5 +1,4 @@
 const path = require('path');
-const util = require('util');
 
 const Koa = require('koa');
 var Router = require('koa-router');
@@ -12,6 +11,7 @@ const serve = require('koa-static');
 const views = require('koa-views');
 
 const nunjucks = require('nunjucks');
+const sleep = require('sleep');
 
 const staticPath = path.join(__dirname, '../static');
 const viewPath = path.join(__dirname, '../views');
@@ -25,7 +25,9 @@ env.addFilter('json', function(value, spaces) {
   return nunjucks.runtime.markSafe(jsonString);
 });
 
-const sleep = util.promisify(setTimeout);
+function randomInt(low, high) {
+  return Math.floor(Math.random() * (high - low) + low);
+}
 
 const app = new Koa();
 app.use(conditional());
@@ -49,7 +51,7 @@ app.use(
 
 const router = new Router();
 router.get('/', async (ctx) => {
-  await sleep(500);
+  sleep.msleep(randomInt(100, 500));
 
   ctx.state = {
     username: 'from-koa',
