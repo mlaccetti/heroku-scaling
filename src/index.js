@@ -25,8 +25,12 @@ env.addFilter('json', function(value, spaces) {
   return nunjucks.runtime.markSafe(jsonString);
 });
 
-function randomInt(low, high) {
-  return Math.floor(Math.random() * (high - low) + low);
+function fibo(n) {
+  if (n < 2) {
+    return 1;
+  } else {
+    return fibo(n - 2) + fibo(n - 1);
+  }
 }
 
 const app = new Koa();
@@ -51,11 +55,12 @@ app.use(
 
 const router = new Router();
 router.get('/', async (ctx) => {
-  sleep.msleep(randomInt(100, 500));
+  const fiboValue = fibo(40);
 
   ctx.state = {
     username: 'from-koa',
-    request: ctx.request.headers
+    request: ctx.request.headers,
+    fibo: fiboValue
   };
   return ctx.render('index.njk');
 });
