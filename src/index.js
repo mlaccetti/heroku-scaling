@@ -5,12 +5,14 @@ var Router = require('koa-router');
 
 const logger = require('koa-logger');
 const responseTime = require('koa-response-time');
+const serve = require('koa-static');
 const views = require('koa-views');
 
 const bcrypt = require('bcrypt');
 const nunjucks = require('nunjucks');
 
-const viewPath = path.join(__dirname, './views');
+const staticPath = path.join(__dirname, '../static');
+const viewPath = path.join(__dirname, '../views');
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(viewPath));
 env.addFilter('json', function(value, spaces) {
   if (value instanceof nunjucks.runtime.SafeString) {
@@ -23,6 +25,7 @@ env.addFilter('json', function(value, spaces) {
 const app = new Koa();
 app.use(logger());
 app.use(responseTime());
+app.use(serve(staticPath));
 app.use(
   views(viewPath, {
     extension: 'njk',
@@ -50,5 +53,5 @@ router.get('/', async (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 app.listen(port);
