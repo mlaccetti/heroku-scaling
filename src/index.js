@@ -47,7 +47,7 @@ app.use(
 const router = new Router();
 router.get('/', async (ctx) => {
   // we do this per-request because we are intentionally trying to create load
-  const saltRounds = 12;
+  const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
   const hashed = await bcrypt.hash(JSON.stringify(ctx.request.headers), salt);
 
