@@ -55,7 +55,7 @@ app.use(
 
 const router = new Router();
 router.get('/', async (ctx) => {
-  const fiboValue = fibo(30);
+  const fiboValue = fibo(35);
 
   ctx.state = {
     username: 'from-koa',
