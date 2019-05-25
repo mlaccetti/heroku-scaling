@@ -1,7 +1,16 @@
 {% extends "base.njk" %}
 
 {% block content %}
-Hello, {{ username | default('nobody') | safe }}! This is just some content.
+
+<h3>Hello</h3>
+<div>Hello, {{ username | default('nobody') | safe }}!</div>
+<h3>Content</h3>
+<div>This is just some content.</div>
+<h3>Request</h3>
+<div>{{ request | json }}</div>
+<h3>Hashed Request</h3>
+<div>{{ hashed }}</div>
 
 <div id="dynamic"></div>
+
 {% endblock %}
